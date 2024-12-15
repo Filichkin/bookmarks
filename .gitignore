@@ -151,3 +151,6 @@ media/
 bd.json
 
 settings.py
+
+cert.crt
+cert.key
