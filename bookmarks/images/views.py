@@ -62,7 +62,7 @@ def image_like(request):
     return JsonResponse({'status': 'error'})
 
 
-@login_required  
+@login_required
 def image_list(request):
     images = Image.objects.all()
     paginator = Paginator(images, 8)
