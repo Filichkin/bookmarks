@@ -12,6 +12,7 @@ from .forms import (
     ProfileEditForm
 )
 from .models import Contact, Profile
+from actions.models import Action
 from actions.utils import create_action
 
 
@@ -44,10 +45,17 @@ def user_login(request):
 
 @login_required
 def dashboard(request):
+    actions = Action.objects.exclude(user=request.user)
+    following_ids = request.user.following.values_list(
+        'id', flat=True
+    )
+    if following_ids:
+        actions = actions.filter(user_id__in=following_ids)
+    actions = actions[:10]
     return render(
         request,
         'account/dashboard.html',
-        {'section': 'dashboard'}
+        {'section': 'dashboard', 'actions': actions}
     )
 
 
