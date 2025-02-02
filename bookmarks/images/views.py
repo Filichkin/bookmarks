@@ -58,7 +58,7 @@ def image_detail(request, id, slug):
             'section': 'images',
             'image': image,
             'total_views': total_views
-        },
+        }
 
     )
 
@@ -114,7 +114,7 @@ def image_ranking(request):
     image_ranking = REDIS.zrange(
         'image_ranking', 0, -1,
         desc=True
-    )
+    )[:10]
     image_ranking_ids = [int(id) for id in image_ranking]
     most_viewed = list(
         Image.objects.filter(
